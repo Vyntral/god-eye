@@ -1,0 +1,74 @@
+MIT License
+
+Copyright (c) 2025 Vyntral / Orizon
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+ADDITIONAL TERMS AND CONDITIONS FOR SECURITY TOOLS
+
+1. AUTHORIZED USE ONLY
+   This software is intended exclusively for authorized security testing,
+   penetration testing, bug bounty programs, and educational purposes.
+   Users must obtain explicit written permission from target domain owners
+   before conducting any scans or security assessments.
+
+2. NO WARRANTY
+   This software is provided "as is" without warranty of any kind. The authors
+   make no warranties, express or implied, regarding the software's accuracy,
+   reliability, or fitness for any particular purpose.
+
+3. LIMITATION OF LIABILITY
+   In no event shall the authors or copyright holders be liable for any claim,
+   damages, or other liability arising from the use or misuse of this software.
+   This includes, but is not limited to:
+   - Unauthorized access to computer systems
+   - Data breaches or information disclosure
+   - Service disruptions or denial of service
+   - Legal consequences from improper use
+   - Any direct, indirect, incidental, or consequential damages
+
+4. USER RESPONSIBILITY
+   Users of this software are solely responsible for:
+   - Obtaining proper authorization before scanning any targets
+   - Complying with all applicable laws and regulations
+   - Respecting the terms of service of bug bounty programs
+   - Ensuring ethical and legal use of the tool
+   - Any consequences resulting from the use of this software
+
+5. COMPLIANCE WITH LAWS
+   Users must comply with all applicable laws including but not limited to:
+   - Computer Fraud and Abuse Act (CFAA) in the United States
+   - Computer Misuse Act in the United Kingdom
+   - GDPR and other data protection regulations
+   - Local laws regarding computer security and unauthorized access
+
+6. INDEMNIFICATION
+   By using this software, you agree to indemnify and hold harmless the authors,
+   contributors, and copyright holders from any claims, damages, or expenses
+   arising from your use or misuse of the software.
+
+7. NO ENDORSEMENT OF ILLEGAL ACTIVITIES
+   The authors do not endorse or encourage any illegal or unethical use of
+   this software. This tool is provided for legitimate security research and
+   testing purposes only.
+
+8. ACKNOWLEDGMENT AND ACCEPTANCE
+   By downloading, installing, or using this software, you acknowledge that
+   you have read this license, understand it, and agree to be bound by its
+   terms and conditions.
