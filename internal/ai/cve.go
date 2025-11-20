@@ -59,6 +59,10 @@ var (
 		Timeout: 10 * time.Second,
 	}
 	nvdBaseURL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
+
+	// Rate limiting: max 5 requests per 30 seconds (NVD allows 10 req/60s without API key)
+	lastNVDRequest time.Time
+	nvdRateLimit   = 6 * time.Second // Wait 6 seconds between requests
 )
 
 // SearchCVE searches for CVE vulnerabilities using NVD API
@@ -121,6 +125,15 @@ func SearchCVE(technology string, version string) (string, error) {
 
 // queryNVD queries the NVD API for CVE information
 func queryNVD(keyword string) ([]CVEInfo, error) {
+	// Rate limiting: wait if necessary
+	if !lastNVDRequest.IsZero() {
+		elapsed := time.Since(lastNVDRequest)
+		if elapsed < nvdRateLimit {
+			time.Sleep(nvdRateLimit - elapsed)
+		}
+	}
+	lastNVDRequest = time.Now()
+
 	// Build URL with query parameters
 	params := url.Values{}
 	params.Add("keywordSearch", keyword)

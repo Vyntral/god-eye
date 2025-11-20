@@ -254,25 +254,32 @@ Be concise and professional.`,
 	return response, nil
 }
 
-// CVEMatch checks for known vulnerabilities in detected technologies using function calling
+// CVEMatch checks for known vulnerabilities in detected technologies
 func (c *OllamaClient) CVEMatch(technology, version string) (string, error) {
-	prompt := fmt.Sprintf(`Check if %s version %s has known CVE vulnerabilities. Use the search_cve tool to look up real CVE data from the NVD database.
-
-After getting CVE results, analyze them and provide:
-1. Summary of findings
-2. Severity assessment
-3. Specific recommendations
-
-If version is unknown, still search using just the technology name.`, technology, version)
-
-	// Use function calling with tools
-	response, err := c.queryWithTools(c.DeepModel, prompt, 30*time.Second)
+	// Call SearchCVE directly instead of using function calling (more reliable)
+	cveData, err := SearchCVE(technology, version)
 	if err != nil {
 		return "", err
 	}
 
-	if strings.Contains(strings.ToLower(response), "no known cve") {
+	// If no CVEs found, return empty
+	if strings.Contains(cveData, "No known CVE vulnerabilities found") {
 		return "", nil
+	}
+
+	// Ask AI to analyze the CVE data
+	prompt := fmt.Sprintf(`Analyze these CVE vulnerabilities for %s and provide a concise security assessment:
+
+%s
+
+Provide a 2-3 sentence summary focusing on:
+- Most critical vulnerabilities
+- Key recommendations`, technology, cveData)
+
+	response, err := c.query(c.FastModel, prompt, 20*time.Second)
+	if err != nil {
+		// If AI analysis fails, return the raw CVE data
+		return cveData, nil
 	}
 
 	return response, nil
@@ -424,13 +431,15 @@ func (c *OllamaClient) queryWithTools(model, prompt string, timeout time.Duratio
 			}
 		}
 
-		// Send tool results back to AI for final analysis
-		followUpPrompt := fmt.Sprintf(`%s
+		// Build a clear follow-up prompt with context
+		followUpPrompt := fmt.Sprintf(`You previously asked to use tools to answer this question:
+"%s"
 
-Tool Results:
+Here are the results from the tools you requested:
+
 %s
 
-Based on these results, provide your analysis.`, prompt, formatToolResults(toolResults))
+Now, based on these SPECIFIC results above, provide a detailed security analysis. Use the actual CVE data provided, including CVE IDs, severity scores, and descriptions. Do NOT say you don't have information - the data is RIGHT ABOVE.`, prompt, formatToolResults(toolResults))
 
 		return c.query(model, followUpPrompt, timeout)
 	}
