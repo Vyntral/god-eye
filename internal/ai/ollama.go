@@ -227,29 +227,27 @@ Format: SEVERITY: finding`, truncate(summary, 4000))
 
 // GenerateReport creates executive summary and recommendations
 func (c *OllamaClient) GenerateReport(findings string, stats map[string]int) (string, error) {
-	prompt := fmt.Sprintf(`You are a security analyst. Create a security assessment report based on the findings below.
+	prompt := fmt.Sprintf(`You are a security analyst. Create a brief security report from the scan data below.
 
-SCAN STATISTICS:
-- Total subdomains: %d
-- Active: %d
-- Vulnerabilities: %d
-- Takeovers: %d
+STATISTICS: %d subdomains scanned, %d active, %d vulnerabilities, %d takeovers
 
-FINDINGS DATA (use these EXACT subdomain names in your report):
+SCAN FINDINGS:
 %s
 
-INSTRUCTIONS:
-1. Use the ACTUAL subdomain names from the findings data above (e.g., "new.computerplus.it", "api.example.com")
-2. Do NOT use generic placeholders like "Subdomain A" or "Subdomain B"
-3. Reference specific vulnerabilities found for each subdomain
-4. Include CVE IDs when present
+RULES:
+- Use ONLY the subdomain names shown in SCAN FINDINGS above
+- Do NOT invent or make up any subdomain names
+- If no vulnerabilities found, say "No critical issues identified"
 
-Generate report with:
-## Executive Summary (2-3 sentences with real subdomain names)
-## Critical Findings (list each affected subdomain by name with its issues)
-## Recommendations (actionable items referencing specific subdomains)
+FORMAT:
+## Summary
+(2 sentences about what was found)
 
-Be concise and professional. Use the real data provided above.`,
+## Issues
+(List each real subdomain with its actual issues, or "None" if clean)
+
+## Actions
+(1-3 specific recommendations)`,
 		stats["total"], stats["active"], stats["vulns"], stats["takeovers"], truncate(findings, 3000))
 
 	response, err := c.query(c.DeepModel, prompt, 45*time.Second)
